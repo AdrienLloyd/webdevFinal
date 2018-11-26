@@ -64,11 +64,20 @@
                 <?php else :?>
                     <a href="login.php">sign in to create a Forum</a> 
                 <?php endif ?>
+                
             </ul>
+            <!-- create a new list for each category to select from -->
+            <ul>
+                <?php if(isset($_SESSION['type'])):?>
+                    <?php if($_SESSION['type'] == 1):?>
+                        <li><a href="categorylist.php">View Category List</a></li>
+                    <?php endif?>
+                <?php endif ?>
+            </ul>
+                
             ----------------------------------------------------------------------------------
         </div>
         
-        <!-- amen -->
         <div id="body">
             This is where you would introduce the website and sell it to people who are visiting it for the first time.
             Sell your service and explain prices and services in depth
@@ -79,7 +88,7 @@
                 <a href="index.php?orderBy=updatedDate">Sort By Date Updated</a>
             <?php endif ?>
             <h4>Sort Type:  <?=$sortType?></h4>
-
+            <!--  -->
             <ul>
                 <?php if($statement->rowCount() !=0):?>
                     <?php while($row = $statement->fetch()):?>
@@ -96,9 +105,6 @@
                         </li>
                     <?php endwhile?>
                 <?php endif?>
-                <?php if(isset($_SESSION['username'])):?>
-                    <li><a href="forumlist.php?orderBy=title">View Page List...</a></li>
-                <?php endif ?>
             </ul>
         </div>
 
