@@ -2,42 +2,52 @@
     require('connect.php');
     session_start();
     
-    //$query = "SELECT * FROM forums";
-    //$statement = $db->prepare($query);
-    //$statement->execute();
-    
+    $query = "SELECT * FROM forums";
+    //for category
+    if(!isset($_SESSION['category']) || $_GET['orderBy'] == "None")
+    {
+        $_SESSION['category'] = "None";
+    }
+    if(isset($_POST['category']))
+    {
+        $_SESSION['category'] = $_POST['category'];
+    }
+    if($_SESSION['category'] != "None")
+    {
+        $query .= " WHERE categoryId = ". $_SESSION['category'];
+    }
 
-    if(isset($_GET['orderBy']) && isset($_SESSION['username']))
+    //for search
+    if (isset($_POST['search_button']) && $_SESSION['category'] != "None") 
     {
-        if($_GET['orderBy'] == 'createdDate')
+        $search = $_POST['search'];
+        $query .= " AND title LIKE '%".$search."%'";
+    }
+    if(isset($_POST['search_button']) && $_SESSION['category'] == "None")
+    {
+        $search = $_POST['search'];
+        $query .= " WHERE title LIKE '%".$search."%'";
+    }
+
+    //for order by
+    if(!isset($_SESSION['orderBy']) || $_GET['orderBy'] == "None")
+    {
+        $_SESSION['orderBy'] = "None";
+    }
+    if(isset($_GET['orderBy']))
+    {
+        $_SESSION['orderBy'] = $_GET['orderBy'];
+    }
+    if($_SESSION['orderBy'] != "None")
+    {
+        $query .= " ORDER BY " . $_SESSION['orderBy'];
+        if($_SESSION['orderBy'] == "createdDate" || $_SESSION['orderBy'] == "updatedDate")
         {
-            $query = "SELECT * FROM forums ORDER BY createdDate DESC";
-            $statement = $db->prepare($query);
-            $statement->execute();
-            $sortType = "Date Created";
-        }
-        if($_GET['orderBy'] == 'updatedDate')
-        {
-            $query = "SELECT * FROM forums ORDER BY updatedDate DESC";
-            $statement = $db->prepare($query);
-            $statement->execute();
-            $sortType = "Date Updated";
-        }
-        if($_GET['orderBy'] == 'title')
-        {
-            $query = "SELECT * FROM forums ORDER BY title";
-            $statement = $db->prepare($query);
-            $statement->execute();
-            $sortType = "Title";
+            $query .= " DESC";
         }
     }
-    else
-    {
-        $query = "SELECT * FROM forums";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $sortType = "None";
-    }
+    $statement = $db->prepare($query);
+    $statement->execute();
 ?>
 <!DOCTYPE html>
 <html lang = "en">
@@ -51,44 +61,20 @@
 </head>
 <body>
     <div id="wrapper">
-        <!-- make a header/footer include -->
-        <div id="header">
-            <h1>BidderCoders - Home</h1>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="login.php">Login/Register</a></li>
-                <li><a href="destroy.php">Log out</a></li>
-
-                <?php if(isset($_SESSION['username'])):?>
-                    <li><a href="forumcreate.php">Create Forum</a></li>
-                <?php else :?>
-                    <a href="login.php">sign in to create a Forum</a> 
-                <?php endif ?>
-                
-            </ul>
-            <!-- create a new list for each category to select from -->
-            <ul>
-                <?php if(isset($_SESSION['type'])):?>
-                    <?php if($_SESSION['type'] == 1):?>
-                        <li><a href="categorylist.php">View Category List</a></li>
-                    <?php endif?>
-                <?php endif ?>
-            </ul>
-                
-            ----------------------------------------------------------------------------------
-        </div>
+        <!-- with header include! -->
+        <?php include('header.php');?>
         
         <div id="body">
             This is where you would introduce the website and sell it to people who are visiting it for the first time.
             Sell your service and explain prices and services in depth
             <br>
+
             <?php if(isset($_SESSION['username'])):?>
                 <a href="index.php?orderBy=title">Sort By Title</a>
                 <a href="index.php?orderBy=createdDate">Sort By Date Created</a>
                 <a href="index.php?orderBy=updatedDate">Sort By Date Updated</a>
             <?php endif ?>
-            <h4>Sort Type:  <?=$sortType?></h4>
-            <!--  -->
+            <h4>Sort Type:  <?=$_SESSION['orderBy']?></h4>
             <ul>
                 <?php if($statement->rowCount() !=0):?>
                     <?php while($row = $statement->fetch()):?>
@@ -108,22 +94,9 @@
             </ul>
         </div>
 
-        <!-- make a header/footer include -->
-        <div id="footer">
-        ----------------------------------------------------------------------------------
-        <h3>BidderCoder</h3>
-        <h3>An AlloyDynamics Company</h3>
-        <?php $statement->execute();?>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="login.php">Login/Register</a></li>
-                <li><a href="destroy.php">Log out</a></li>
-
-                <?php if(isset($_SESSION['username'])):?>
-                    <li><a href="forumcreate.php">Create Forum</a></li>
-                <?php endif ?>
-            </ul>
-        </div>
+        <!-- with footer included! -->
+        <?php include('footer.php');?>
+        
     </div>
 </body>
 </html>
