@@ -51,7 +51,7 @@
         $statement->bindValue(':forumId',$forumId,PDO::PARAM_STR);
         if($statement->execute())
         {
-            header('Location: adminforumlist.php?orderBy=title');
+            header('Location: index.php?orderBy=title');
         }
         exit();
     }
