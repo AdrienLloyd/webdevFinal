@@ -5,6 +5,9 @@
     {
         header('Location: index.php');
     }
+    $query = "SELECT * FROM categories";
+    $statement = $db->prepare($query);
+    $statement->execute();
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,6 +33,13 @@
         <textarea name="description" id="description" cols="30" rows="10"></textarea>
         <label for="rules">Forum Rules</label>
         <textarea name="rules" id="rules" cols="30" rows="10"></textarea>
+        <select name="category" id="category">
+            <?php if($statement->rowCount() !=0):?>
+                <?php while($row = $statement->fetch()):?>
+                    <option value="<?=$row['type']?>"><?=$row['name']?></option>
+                <?php endwhile?>
+            <?php endif?>
+        </select>
         <button type="submit" value="Submit">Submit</button>
     </form>
 </body>

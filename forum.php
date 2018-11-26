@@ -63,7 +63,7 @@
 
         <div id="body">
             <h3><?=$forum['title']?></h3>
-            <img src="not implemented yet" alt="no image found">
+            <img src="<?=$forum['image']?>" alt="no image found">
             <h4>Description</h4>
             <?=$forum["Description"]?>
             <h4>Rules</h4>
