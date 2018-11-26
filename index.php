@@ -61,6 +61,8 @@
 
                 <?php if(isset($_SESSION['username'])):?>
                     <li><a href="forumcreate.php">Create Forum</a></li>
+                <?php else :?>
+                    <a href="login.php">sign in to create a Forum</a> 
                 <?php endif ?>
             </ul>
             ----------------------------------------------------------------------------------
@@ -82,7 +84,9 @@
                 <?php if($statement->rowCount() !=0):?>
                     <?php while($row = $statement->fetch()):?>
                         <li>
-                            <a href="forum.php?id=<?=$row['forumId']?>"><?=$row['title']?></a>
+                        
+                            <img src="images/<?=$row["image"]?>" alt="No Images Available"><br>
+                            <a href="forum.php?forumId=<?=$row['forumId']?>"><?=$row['title']?></a>
                             <?php if(isset($_SESSION['username'])):?>
                                 <?php if($_SESSION['username'] == 'admin' || $_SESSION['username'] == $row['username']):?>
                                     <a href="forumdelete.php?forumId=<?=$row['forumId']?>">DELETE</a> 

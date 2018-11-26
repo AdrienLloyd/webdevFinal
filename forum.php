@@ -1,12 +1,26 @@
 <?php
-    if($forumId = !filter_input(INPUT_GET,'id',FILTER_SANITIZE_NUMBER_INT))
+    require('connect.php');
+    session_start();
+    if($forumId = !filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT))
     {
         //maybe set an error message instead
         header('Location: index.php');
     }
-    $forumId = filter_input(INPUT_GET,'id',FILTER_SANITIZE_NUMBER_INT);
-    require('connect.php');
-    
+    $forumId = filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT);
+    //change this if statement because a refresh resubmits the post
+    if(strtoupper($_SERVER['REQUEST_METHOD']) == 'POST')
+    {
+        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $body = filter_input(INPUT_POST, 'body', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $username = $_SESSION['username'];
+        $insertQuery = "INSERT INTO forumposts (title,body,forumId,username) VALUES (:title,:body,:forumId,:username)";
+        $insertStatement = $db-> prepare($insertQuery);
+        $insertStatement->bindValue(':title',$title);
+        $insertStatement->bindValue(':body',$body);
+        $insertStatement->bindValue(':forumId',$forumId);
+        $insertStatement->bindValue(':username',$username);
+        $insertStatement->execute();
+    }
 
     $forumQuery = "SELECT * FROM forums WHERE forumId = $forumId";
     $forumStatement = $db->prepare($forumQuery);
@@ -48,6 +62,8 @@
         </div>
 
         <div id="body">
+            <h3><?=$forum['title']?></h3>
+            <img src="not implemented yet" alt="no image found">
             <h4>Description</h4>
             <?=$forum["Description"]?>
             <h4>Rules</h4>
@@ -57,15 +73,39 @@
                 <?php if($postStatement->rowCount() !=0):?>
                     <?php while($row = $postStatement->fetch()):?>
                         <li>
-                            <?=$row["title"]?><br>
-                            <img src="images/<?=$row["image"]?>" alt="No Images Available"><br>
-                            <?=$row["body"]?><br>
+                            <h4><?=$row["title"]?></h4><br/>
+                            <?=$row["body"]?><br/>
+                            <?php if(isset($_SESSION['username'])):?>
+                                <?php if($_SESSION['username'] == 'admin'):?>
+                                    <a href="postdelete.php?postId=<?=$row['postId']?>&forumId=<?=$forumId?>">DELETE</a>
+                                <?php endif ?>
+                            <?php endif ?>
+
+                            <!-- removed this because i think that i might remove postSubmissions
+                            ***************************************
                             <a href="post.php?postId=<?=$row["postId"]?>&userId=<?=$row["userId"]?>">View Post</a>
-                            
+                            ***************************************-->
                         </li>
                     <?php endwhile?>
+                <?php else :?>
+                <a href="login.php">sign in to add a comment</a> 
                 <?php endif?>
             </ul>
+            
+
+            <!-- check if user is signed in with an if $_Session["signedIn"] = true -->
+            <?php if(isset($_SESSION['username'])):?>
+                <form id="post" 
+                action="forum.php?forumId=<?=$forumId?>"
+                method="post">
+                    <label for="title">Bid Title</label>
+                    <input id="title" name="title" type="text">
+                    <label for="body">Bid Content</label>
+                    <textarea name="body" id="body" cols="30" rows="10"></textarea>
+                    <button type="submit" value="Submit">Submit</button>
+                </form>
+            <?php endif ?>
+            <!-- else echo guest to sign in to be able to comment on posts-->
         </div>
         <!-- make a header/footer include -->
         <div id="footer">
