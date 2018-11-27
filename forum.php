@@ -4,7 +4,7 @@
     if($forumId = !filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT))
     {
         //maybe set an error message instead
-        header('Location: index.php');
+        header('Location: index.php?orderBy=None');
     }
     $forumId = filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT);
     //change this if statement because a refresh resubmits the post
@@ -19,7 +19,11 @@
         $insertStatement->bindValue(':body',$body);
         $insertStatement->bindValue(':forumId',$forumId);
         $insertStatement->bindValue(':username',$username);
-        $insertStatement->execute();
+        
+        if($insertStatement->execute())
+        {
+            $_SERVER['REQUEST_METHOD'] == null;
+        }
     }
 
     $forumQuery = "SELECT * FROM forums WHERE forumId = $forumId";
@@ -64,25 +68,21 @@
                         <li>
                             <h4><?=$row["title"]?></h4><br/>
                             <?=$row["body"]?><br/>
+
                             <?php if(isset($_SESSION['username'])):?>
                                 <?php if($_SESSION['username'] == 'admin'):?>
                                     <a href="postdelete.php?postId=<?=$row['postId']?>&forumId=<?=$forumId?>">DELETE</a>
                                 <?php endif ?>
                             <?php endif ?>
-
-                            <!-- removed this because i think that i might remove postSubmissions
-                            ***************************************
-                            <a href="post.php?postId=<?=$row["postId"]?>&userId=<?=$row["userId"]?>">View Post</a>
-                            ***************************************-->
                         </li>
                     <?php endwhile?>
                 <?php else :?>
-                <a href="login.php">sign in to add a comment</a> 
+                    Be the first to add a comment!
                 <?php endif?>
             </ul>
             
 
-            <!-- check if user is signed in with an if $_Session["signedIn"] = true -->
+            <!-- check if user is signed in with an if $_Session"signedIn" = true -->
             <?php if(isset($_SESSION['username'])):?>
                 <form id="post" 
                 action="forum.php?forumId=<?=$forumId?>"
@@ -93,9 +93,12 @@
                     <textarea name="body" id="body" cols="30" rows="10"></textarea>
                     <button type="submit" value="Submit">Submit</button>
                 </form>
+            <?else :?>
+                You must <a href="login.php">Sign In</a> To post a comment.
             <?php endif ?>
             <!-- else echo guest to sign in to be able to comment on posts-->
         </div>
+        
         <!-- with footer include! -->
         <?php include('footer.php');?>
     </div>

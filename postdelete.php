@@ -1,11 +1,9 @@
 <?php 
-    //your services are no longer required. please refer to forumupdating.php
+    //ability to delete this, add it
     require('connect.php');
     session_start();
-    if(!isset($_SESSION['type']))
-    {
-        header('Location: index.php');
-    }
+    include('useronly.php');
+    
     if($forumId = !filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT))
     {
         //maybe set an error message instead
