@@ -14,21 +14,31 @@
     $statement->execute();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Admin Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="main.js"></script>
 </head>
 <body>
-<a href="index.php">Go Home</a>
-    <?php if($statement->rowCount() !=0):?>
-        <?php while($row = $statement->fetch()):?>
-            <li><?=$row['username']?><a href="admindeleteuser.php?username=<?=$row['username']?>"> DELETE</a></li>
-        <?php endwhile?>
-    <?php endif?>
+    <div id="wrapper">
+
+        <!-- with header include! -->
+        <?php include('header.php');?>
+
+        <div id="body">
+            <?php if($statement->rowCount() !=0):?>
+                <?php while($row = $statement->fetch()):?>
+                    <li><?=$row['username']?><a href="admindeleteuser.php?username=<?=$row['username']?>"> DELETE</a></li>
+                <?php endwhile?>
+            <?php endif?>
+        </div>
+
+        <!-- with footer include! -->
+        <?php include('footer.php');?>
+    </div>
 </body>
 </html>

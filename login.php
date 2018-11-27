@@ -41,19 +41,8 @@
 </head>
 <body>
     <div id="wrapper">
-        <!-- make a header/footer include -->
-        <div id="header">
-            <h1>BidderCoders - Home</h1>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <?php if($statement->rowCount() != 0):?>
-                    <?php while($row = $statement->fetch()):?>
-                        <li><a href="forum.php?id=<?=$row['forumId']?>"><?=$row['title']?></a></li>
-                    <?php endwhile?>
-                <?php endif?>
-            </ul>
-            ----------------------------------------------------------------------------------
-        </div>
+        <!-- with header include! -->
+        <?php include('header.php');?>
 
         <div id="body">
             <!-- this page should include a login form and a register form -->
@@ -112,21 +101,9 @@
                 <a href="adminuserlist.php">View User List</a>
             <?php endif ?>
         <?php endif ?>
-        <!-- make a header/footer include -->
-        <div id="footer">
-        ----------------------------------------------------------------------------------
-        <h3>BidderCoder</h3>
-        <h3>An AlloyDynamics Company</h3>
-        <?php $statement->execute()?>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <?php if($statement->rowCount() !=0):?>
-                    <?php while($row = $statement->fetch()):?>
-                        <li><a href="forum.php?id=<?=$row['forumId']?>"><?=$row['title']?></a></li>
-                    <?php endwhile?>
-                <?php endif?>
-            </ul>
-        </div>
+
+        <!-- with footer include! -->
+        <?php include('footer.php');?>
     </div>
 </body>
 </html>

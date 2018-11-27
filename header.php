@@ -5,7 +5,7 @@
 
 ?>
 <div id="header">
-    <h1>BidderCoders - Home</h1>
+    <h1>BidderCoders</h1>
     <ul>
 
         <li><a href="index.php?orderBy=None">Home</a></li>
@@ -20,7 +20,7 @@
 
         <?php if(isset($_SESSION['type'])):?>
             <?php if($_SESSION['type'] == 1):?>
-                <li><a href="categorylist.php">View Category List</a></li>
+                <li><a href="admin.php">View Admin Page</a></li>
             <?php endif?>
         <?php endif ?>
 

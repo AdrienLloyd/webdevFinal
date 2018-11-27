@@ -11,18 +11,29 @@
     }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Admin Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="main.js"></script>
 </head>
 <body>
-<a href="index.php">Go Home</a>
-<a href="adminforumlist.php?orderBy=title">View Forum List</a>
-<a href="adminuserlist.php">View User List</a>
+    <div id="wrapper">
+        <!-- with header include! -->
+        <?php include('header.php');?>
+
+        <div id="body">
+            <ul>
+                <li><a href="adminuserlist.php">View User List</a></li>
+                <li><a href="categorylist.php">View Category List</a></li>
+            </ul>
+        </div>
+            
+        <!-- with footer include! -->
+        <?php include('footer.php');?>
+    </div>
 </body>
 </html>

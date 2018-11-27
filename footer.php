@@ -2,7 +2,6 @@
 ----------------------------------------------------------------------------------
     <h3>BidderCoder</h3>
     <h3>An AlloyDynamics Company</h3>
-    <?php $statement->execute();?>
         <ul>
             <li><a href="index.php?orderBy=None">Home</a></li>
             <li><a href="login.php">Login/Register</a></li>

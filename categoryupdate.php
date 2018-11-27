@@ -19,22 +19,33 @@
     $row = $statement->fetch();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Admin Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="main.js"></script>
 </head>
 <body>
-    <form id="forum"
-		action="categoryupdating.php?type=<?=$type?>"
-        method="post">
-        <label for="name">Category Name</label>
-        <input id="name" name="name" type="text" value="<?=$row['name']?>">
-        <button type="submit" name="update_button" value="update">Update</button>
-    </form>
+    <div id="wrapper">
+
+        <!-- with header include! -->
+        <?php include('header.php');?>
+
+        <div id="body">
+            <form id="forum"
+            action="categoryupdating.php?type=<?=$type?>"
+            method="post">
+                <label for="name">Category Name</label>
+                <input id="name" name="name" type="text" value="<?=$row['name']?>">
+                <button type="submit" name="update_button" value="update">Update</button>
+            </form>
+        </div>
+    
+        <!-- with header include! -->
+        <?php include('header.php');?>
+    </div>
 </body>
 </html>

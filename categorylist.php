@@ -14,37 +14,20 @@
     $statement->execute();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Admin Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="main.js"></script>
 </head>
 <body>
     <div id="wrapper">
-        <div id="header">
-            <h1>BidderCoders - Home</h1>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="login.php">Login/Register</a></li>
-                <li><a href="destroy.php">Log out</a></li>
 
-                <?php if(isset($_SESSION['username'])):?>
-                    <li><a href="forumcreate.php">Create Forum</a></li>
-                <?php else :?>
-                    <a href="login.php">sign in to create a Forum</a> 
-                <?php endif ?>
-                <?php if(isset($_SESSION['username'])):?>
-                    <li><a href="categorycreate.php">Create Category</a></li>
-                <?php else :?>
-                    <a href="login.php">sign in to view Categories list</a> 
-                <?php endif ?>
-            </ul>
-            ----------------------------------------------------------------------------------
-        </div>
+        <!-- with header include! -->
+        <?php include('header.php');?>
 
         <div id="body">
             <ul>
@@ -61,28 +44,8 @@
             </ul>
         </div>
 
-        <div id="footer">
-        ----------------------------------------------------------------------------------
-        <h3>BidderCoder</h3>
-        <h3>An AlloyDynamics Company</h3>
-        <?php $statement->execute();?>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="login.php">Login/Register</a></li>
-                <li><a href="destroy.php">Log out</a></li>
-
-                <?php if(isset($_SESSION['username'])):?>
-                    <li><a href="forumcreate.php">Create Forum</a></li>
-                <?php else :?>
-                    <a href="login.php">sign in to create a Forum</a>
-                <?php endif ?>
-                <?php if(isset($_SESSION['username'])):?>
-                    <li><a href="categorycreate.php">Create Category</a></li>
-                <?php else :?>
-                    <a href="login.php">sign in to view Categories list</a> 
-                <?php endif ?>
-            </ul>
-        </div>
+        <!-- with footer include! -->
+        <?php include('footer.php');?>
     </div>
 </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+// is this really it chief?
+//maybe i can get rid of you because this isnt it chief...
     require('connect.php');
     if($postId = !filter_input(INPUT_GET,'postId',FILTER_SANITIZE_NUMBER_INT))
     {
