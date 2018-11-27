@@ -1,5 +1,6 @@
 <?php
     require('connect.php');
+    session_start();
     //load the data for the header and footer
     
     if(strtoupper($_SERVER['REQUEST_METHOD']) == 'POST')

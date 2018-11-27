@@ -7,7 +7,7 @@
     if($forumId = !filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT))
     {
         //maybe set an error message instead
-        header('Location: index.php');
+        header('Location: index.php?orderBy=None');
     }
     $forumId = filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT);
     $postId = filter_input(INPUT_GET,'postId',FILTER_SANITIZE_FULL_SPECIAL_CHARS);

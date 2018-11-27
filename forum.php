@@ -19,11 +19,8 @@
         $insertStatement->bindValue(':body',$body);
         $insertStatement->bindValue(':forumId',$forumId);
         $insertStatement->bindValue(':username',$username);
+        $insertStatement->execute();
         
-        if($insertStatement->execute())
-        {
-            $_SERVER['REQUEST_METHOD'] == null;
-        }
     }
 
     $forumQuery = "SELECT * FROM forums WHERE forumId = $forumId";
@@ -63,42 +60,46 @@
             <?=$forum["Rules"]?>
             <h1>Contract Opportunities</h1>
             <ul>
-                <?php if($postStatement->rowCount() !=0):?>
-                    <?php while($row = $postStatement->fetch()):?>
+                <?php if($postStatement->rowCount() !=0) :?>
+                    <?php while($row = $postStatement->fetch()) :?>
                         <li>
-                            <h4><?=$row["title"]?></h4><br/>
-                            <?=$row["body"]?><br/>
+                            <h4><?=$row["title"]?></h4><br>
+                            posted by: <?=$row['username']?><br>
+                            <?=$row["body"]?><br>
 
-                            <?php if(isset($_SESSION['username'])):?>
-                                <?php if($_SESSION['username'] == 'admin'):?>
+                            <?php if(isset($_SESSION['username'])) :?>
+                                <?php if($_SESSION['username'] == 'admin') :?>
                                     <a href="postdelete.php?postId=<?=$row['postId']?>&forumId=<?=$forumId?>">DELETE</a>
                                 <?php endif ?>
                             <?php endif ?>
                         </li>
-                    <?php endwhile?>
+                    <?php endwhile ?>
                 <?php else :?>
                     Be the first to add a comment!
-                <?php endif?>
+                <?php endif ?>
             </ul>
             
 
             <!-- check if user is signed in with an if $_Session"signedIn" = true -->
             <?php if(isset($_SESSION['username'])):?>
+                echo('hello');
                 <form id="post" 
-                action="forum.php?forumId=<?=$forumId?>"
-                method="post">
+                    action="forum.php?forumId=<?=$forumId?>"
+                    method="post">
                     <label for="title">Bid Title</label>
                     <input id="title" name="title" type="text">
+
                     <label for="body">Bid Content</label>
                     <textarea name="body" id="body" cols="30" rows="10"></textarea>
+
                     <button type="submit" value="Submit">Submit</button>
                 </form>
-            <?else :?>
-                You must <a href="login.php">Sign In</a> To post a comment.
+            <?php else :?>
+                You must <a href="login.php">Signed In</a> To post a comment.
             <?php endif ?>
             <!-- else echo guest to sign in to be able to comment on posts-->
         </div>
-        
+
         <!-- with footer include! -->
         <?php include('footer.php');?>
     </div>

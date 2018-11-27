@@ -1,5 +1,5 @@
 <?php
-    //does this page have a use anymore? or did i use something else?
+    //does this page have a use anymore? check login.php
     require('connect.php');
     session_start();
 
@@ -13,7 +13,7 @@
 
     if($password == $dbpassword['password'])
     {
-        
+        $_SESSION['type'] = $dbpassword['type'];
         $_SESSION['username'] = $dbpassword['username'];
         header('Location: index.php');
     }
