@@ -1,10 +1,8 @@
 <?php
     require('connect.php');
     session_start();
-    if(!isset($_SESSION['type']))
-    {
-        header('Location: index.php');
-    }
+    include('useronly.php');
+
     if(!filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT))
     {
         header('Location: index.php');

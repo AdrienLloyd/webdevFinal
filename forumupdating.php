@@ -1,6 +1,7 @@
 <?php
     require('connect.php');
     session_start();
+    include('useronly.php');
     //if you press the update button
     if (isset($_POST['update_button'])) 
     {

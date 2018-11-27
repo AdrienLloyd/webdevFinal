@@ -1,14 +1,8 @@
 <?php
     require('connect.php');
     session_start();
-    if(!isset($_SESSION['type']))
-    {
-        header('Location: index.php');
-    }
-    if($_SESSION['type'] == 2)
-    {
-        header('Location: index.php');
-    }
+    include('adminonly.php');
+
     $query = "SELECT * FROM users";
     $statement = $db->prepare($query);
     $statement->execute();

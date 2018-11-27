@@ -1,10 +1,7 @@
 <?php
     require('connect.php');
     //load the data for the header and footer
-    $query = "SELECT * FROM forums";
-    $statement = $db->prepare($query);
-    $statement->execute();
-    session_start();
+    
     if(strtoupper($_SERVER['REQUEST_METHOD']) == 'POST')
     {
         $username = filter_input(INPUT_POST, 'loginusername', FILTER_SANITIZE_FULL_SPECIAL_CHARS);

@@ -12,11 +12,5 @@
             <?php else :?>
                 <a href="login.php">sign in to create a Forum</a> 
             <?php endif ?>
-
-            <?php if(isset($_SESSION['type'])):?>
-                <?php if($_SESSION['type'] == 1):?>
-                    <li><a href="categorylist.php">View Category List</a></li>
-                <?php endif?>
-            <?php endif ?>
         </ul>
 </div>

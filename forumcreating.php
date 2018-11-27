@@ -1,10 +1,8 @@
 <?php
     require('connect.php');
     session_start();
-    if(!isset($_SESSION['type']))
-    {
-        header('Location: index.php');
-    }
+    include('useronly.php');
+    
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $description = $_POST['description'];
     $rules = $_POST['rules'];

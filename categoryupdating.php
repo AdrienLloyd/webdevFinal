@@ -1,10 +1,9 @@
 <?php
     require('connect.php');
     session_start();
-    if(!isset($_SESSION['type']))
-    {
-        header('Location: index.php');
-    }
+    include('adminonly.php');
+
+
     if(!filter_input(INPUT_GET,'type',FILTER_SANITIZE_NUMBER_INT))
     {
         header('Location: index.php');

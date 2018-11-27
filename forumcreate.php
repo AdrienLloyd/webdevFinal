@@ -1,10 +1,8 @@
 <?php
     require('connect.php');
     session_start();
-    if(!isset($_SESSION['type']))
-    {
-        header('Location: index.php');
-    }
+    include('useronly.php');
+    
     $query = "SELECT * FROM categories";
     $statement = $db->prepare($query);
     $statement->execute();
