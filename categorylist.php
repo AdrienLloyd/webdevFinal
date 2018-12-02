@@ -29,7 +29,6 @@
                     <?php while($row = $statement->fetch()):?>
                         <li>
                             <?=$row['name']?>
-                            <a href="categorydelete.php?type=<?=$row['type']?>">DELETE</a> 
                             <a href="categoryupdate.php?type=<?=$row['type']?>">UPDATE</a>
                         </li>
                     <?php endwhile?>

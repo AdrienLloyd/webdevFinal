@@ -79,12 +79,13 @@
                 <?php if($statement->rowCount() !=0):?>
                     <?php while($row = $statement->fetch()):?>
                         <li>
-                        
-                            <img src="images/<?=$row["image"]?>" alt="No Images Available"><br>
                             <a href="forum.php?forumId=<?=$row['forumId']?>"><?=$row['title']?></a>
+                            <?php if (!($row["image"] =="")) :?>
+                                <img src="uploads/<?=$row["image"]?>" alt="No Images Available"><br>
+                            <?php endif?>
+                            
                             <?php if(isset($_SESSION['username'])):?>
                                 <?php if($_SESSION['username'] == 'admin' || $_SESSION['username'] == $row['username']):?>
-                                    <a href="forumdelete.php?forumId=<?=$row['forumId']?>">DELETE</a> 
                                     <a href="forumupdate.php?forumId=<?=$row['forumId']?>">UPDATE</a>
                                 <?php endif?>
                             <?php endif ?>

@@ -17,7 +17,7 @@
 
     $statement->execute();
 
-    $row = $statement->fetch();
+    $forumRow = $statement->fetch();
 ?>
 <!DOCTYPE html>
 <html lang = "en">
@@ -40,19 +40,19 @@
         <div id="body">
             
             <form id="forum"
-                action="forumupdating.php?forumId=<?=$row['forumId']?>"
+                action="forumupdating.php?forumId=<?=$forumRow['forumId']?>"
                 method="post">
                 <label for="title">Forum Title</label>
-                <input id="title" name="title" type="text" value="<?=$row['title']?>">
+                <input id="title" name="title" type="text" value="<?=$forumRow['title']?>">
 
                 <label for="description">Forum Description</label>
-                <textarea name="description" id="description" cols="30" rows="10"><?=$row['Description']?></textarea>
+                <textarea name="description" id="description" cols="30" rows="10"><?=$forumRow['Description']?></textarea>
 
                 <label for="rules">Forum Rules</label>
-                <textarea name="rules" id="rules" cols="30" rows="10"><?=$row['Rules']?></textarea>
+                <textarea name="rules" id="rules" cols="30" rows="10"><?=$forumRow['Rules']?></textarea>
 
                 <button type="submit" name="update_button" value="update">Update</button>
-                <button type="submit" name="delete_button" value="delete">Delete</button>
+                <button type="submit" name="delete_button" value="delete"  onclick="return confirm('Are you sure you wish to delete this post?')">Delete</button>
             </form>
         </div>
 

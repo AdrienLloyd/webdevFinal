@@ -7,7 +7,24 @@
     $statement = $db->prepare($query);
     $statement->execute();
 ?>
-<!DOCTYPE html>
+ <!-- <!DOCTYPE html>
+ <html>
+     <head><title>File Upload Form</title></head>
+ <body>
+     <form method='post' enctype='multipart/form-data'>
+         <label for='image'>Image Filename:</label>
+         <input type='file' name='image' id='image'>
+         <input type='submit' name='submit' value='Upload Image'>
+     </form>
+     
+    //<?php if ($upload_error_detected): ?>
+
+        <p>Error Number: <?= $_FILES['image']['error'] ?></p>
+
+    //<?php endif ?>
+ </body>
+ </html> -->
+ <!DOCTYPE html>
 <html lang = "en">
 <head>
     <meta charset="utf-8" />
@@ -28,9 +45,13 @@
         <div id="body">
             <form id="forum"
                 action="forumcreating.php"
-                method="post">
+                method="post"
+                enctype="multipart/form-data">
                 <label for="title">Forum Title</label>
                 <input id="title" name="title" type="text">
+
+                <label for='image'>Image Filename:</label>
+                <input type='file' name='image' id='image'>
 
                 <label for="description">Forum Description</label>
                 <textarea name="description" id="description" cols="30" rows="10"></textarea>

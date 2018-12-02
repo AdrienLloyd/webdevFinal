@@ -1,4 +1,5 @@
 <?php 
+//your services are no longer required, please refer to categoryupdating.php
     require('connect.php');
     session_start();
     include('adminonly.php');

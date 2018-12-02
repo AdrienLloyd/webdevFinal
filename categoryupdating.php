@@ -3,24 +3,44 @@
     session_start();
     include('adminonly.php');
 
-
-    if(!filter_input(INPUT_GET,'type',FILTER_SANITIZE_NUMBER_INT))
+    if (isset($_POST['update_button'])) 
     {
-        header('Location: index.php');
+        if(!filter_input(INPUT_GET,'type',FILTER_SANITIZE_NUMBER_INT))
+        {
+            header('Location: index.php');
+        }
+        $type = filter_input(INPUT_GET,'type',FILTER_SANITIZE_NUMBER_INT);
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $query = "UPDATE categories SET name = :name WHERE type = :type";
+        
+        $statement = $db-> prepare($query);
+        
+        $statement->bindValue(':name',$name);
+        $statement->bindValue(':type',$type, PDO::PARAM_INT);
+
+        if($statement->execute())
+        {
+            header('Location: categorylist.php');
+        }
+        exit();
     }
-    $type = filter_input(INPUT_GET,'type',FILTER_SANITIZE_NUMBER_INT);
-    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $query = "UPDATE categories SET name = :name WHERE type = :type";
-    
-    $statement = $db-> prepare($query);
-    
-    $statement->bindValue(':name',$name);
-    $statement->bindValue(':type',$type, PDO::PARAM_INT);
-
-    if($statement->execute())
+    else if(isset($_POST['delete_button'])) 
     {
-        header('Location: categorylist.php');
+        require('connect.php');
+        session_start();
+        include('adminonly.php');
+        
+        $type = $_GET['type'];
+
+        $query = "DELETE FROM categories WHERE type = $type";
+        $statement = $db->prepare($query);
+        $statement->bindValue(':type',$type,PDO::PARAM_INT);
+        if($statement->execute())
+        {
+            header('Location: categorylist.php');
+        }
+        exit();
     }
-    exit();
 ?>

@@ -1,6 +1,7 @@
 <?php
     require('connect.php');
     session_start();
+    
     if($forumId = !filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT))
     {
         //maybe set an error message instead
@@ -20,7 +21,6 @@
         $insertStatement->bindValue(':forumId',$forumId);
         $insertStatement->bindValue(':username',$username);
         $insertStatement->execute();
-        
     }
 
     $forumQuery = "SELECT * FROM forums WHERE forumId = $forumId";
@@ -28,9 +28,9 @@
     $forumStatement->execute();
     $forum = $forumStatement->fetch();
 
-    $query = "SELECT * FROM forums";
-    $statement = $db->prepare($query);
-    $statement->execute();
+    // $query = "SELECT * FROM forums";
+    // $statement = $db->prepare($query);
+    // $statement->execute();
 
     $postQuery = "SELECT * FROM forumposts WHERE forumId = $forumId";
     $postStatement = $db->prepare($postQuery);
@@ -53,12 +53,16 @@
 
         <div id="body">
             <h3><?=$forum['title']?></h3>
-            <img src="<?=$forum['image']?>" alt="no image found">
+            <?php if (!($forum["image"] =="")) :?>
+                <img src="uploads/<?=$forum["image"]?>" alt="No Images Available"><br>
+            <?php endif?>
             <h4>Description</h4>
             <?=$forum["Description"]?>
+
             <h4>Rules</h4>
             <?=$forum["Rules"]?>
-            <h1>Contract Opportunities</h1>
+
+            <h1>Comments</h1>
             <ul>
                 <?php if($postStatement->rowCount() !=0) :?>
                     <?php while($row = $postStatement->fetch()) :?>
@@ -68,7 +72,8 @@
                             <?=$row["body"]?><br>
 
                             <?php if(isset($_SESSION['username'])) :?>
-                                <?php if($_SESSION['username'] == 'admin') :?>
+                                <?php if($_SESSION['username'] == 'admin' || $_SESSION['username'] == $row['username']) :?>
+                                    <!-- turn this into a post with a seperate page called commentProcessing.php -->
                                     <a href="postdelete.php?postId=<?=$row['postId']?>&forumId=<?=$forumId?>">DELETE</a>
                                 <?php endif ?>
                             <?php endif ?>
@@ -82,7 +87,6 @@
 
             <!-- check if user is signed in with an if $_Session"signedIn" = true -->
             <?php if(isset($_SESSION['username'])):?>
-                echo('hello');
                 <form id="post" 
                     action="forum.php?forumId=<?=$forumId?>"
                     method="post">

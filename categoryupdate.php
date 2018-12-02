@@ -4,13 +4,14 @@
     include('adminonly.php');
 
     $type = $_GET['type'];
-    $query = "SELECT * FROM categories WHERE type = $type";
+    $query = "SELECT * FROM categories WHERE type = :type";
+    
     $statement = $db->prepare($query);
     $statement->bindValue(':type',$type,PDO::PARAM_INT);
 
     $statement->execute();
 
-    $row = $statement->fetch();
+    $categoryRow = $statement->fetch();
 ?>
 <!DOCTYPE html>
 <html lang = "en">
@@ -33,8 +34,9 @@
             action="categoryupdating.php?type=<?=$type?>"
             method="post">
                 <label for="name">Category Name</label>
-                <input id="name" name="name" type="text" value="<?=$row['name']?>">
+                <input id="name" name="name" type="text" value="<?=$categoryRow['name']?>">
                 <button type="submit" name="update_button" value="update">Update</button>
+                <button type="submit" name="delete_button" value="delete"  onclick="return confirm('Are you sure you wish to delete this post?')">Delete</button>
             </form>
         </div>
     

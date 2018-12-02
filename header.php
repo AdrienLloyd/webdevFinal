@@ -15,7 +15,7 @@
         <?php if(isset($_SESSION['username'])):?>
             <li><a href="forumcreate.php">Create Forum</a></li>
         <?php else :?>
-            <a href="login.php">sign in to create a Forum</a> 
+            <li><a href="login.php">sign in to create a Forum</a></li>
         <?php endif ?>
 
         <?php if(isset($_SESSION['type'])):?>
