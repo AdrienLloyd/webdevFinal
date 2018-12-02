@@ -74,7 +74,11 @@
                             <?php if(isset($_SESSION['username'])) :?>
                                 <?php if($_SESSION['username'] == 'admin' || $_SESSION['username'] == $row['username']) :?>
                                     <!-- turn this into a post with a seperate page called commentProcessing.php -->
-                                    <a href="postdelete.php?postId=<?=$row['postId']?>&forumId=<?=$forumId?>">DELETE</a>
+                                    <form id="post" 
+                                        action="postdelete.php?postId=<?=$row['postId']?>&forumId=<?=$forumId?>"
+                                        method="post">
+                                        <button type="submit" name="delete_button" value="delete"  onclick="return confirm('Are you sure you wish to delete this post?')">Delete</button>
+                                    </form>
                                 <?php endif ?>
                             <?php endif ?>
                         </li>
