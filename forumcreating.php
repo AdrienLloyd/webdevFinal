@@ -48,14 +48,14 @@
             $imageFileName = $_FILES['image']['name'];
         }
     }
-    // if ($upload_error_detected)
-    // {
-    //     //Error Number: $_FILES['image']['error'
-    // }
     
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $description = $_POST['description'];
     $rules = $_POST['rules'];
+    if($_POST['category'] ==="")
+    {
+        $_POST['category'] = null;
+    }
     $categoryId = $_POST['category'];
 
     date_default_timezone_set('America/Winnipeg');

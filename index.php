@@ -4,7 +4,7 @@
     
     $query = "SELECT * FROM forums";
     //for category
-    if(!isset($_SESSION['category']) || $_GET['orderBy'] == "None")
+    if(!isset($_SESSION['category']))
     {
         $_SESSION['category'] = "None";
     }
@@ -30,7 +30,7 @@
     }
 
     //for order by
-    if(!isset($_SESSION['orderBy']) || $_GET['orderBy'] == "None")
+    if(!isset($_SESSION['orderBy']))
     {
         $_SESSION['orderBy'] = "None";
     }

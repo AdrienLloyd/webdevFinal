@@ -17,11 +17,16 @@
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $description = $_POST['description'];
         $rules = $rules = $_POST['rules'];
-        
+        if($_POST['category'] ==="")
+        {
+            $_POST['category'] = null;
+        }
+        $categoryId = $_POST['category'];
+
         date_default_timezone_set('America/Winnipeg');
         $updatedDate = date('Y-m-d');
         
-        $query = "UPDATE forums SET title = :title, description = :description, rules = :rules, updatedDate = :updatedDate WHERE forumId = :forumId";
+        $query = "UPDATE forums SET title = :title, description = :description, rules = :rules, updatedDate = :updatedDate, categoryId = :categoryId WHERE forumId = :forumId";
         
         $statement = $db-> prepare($query);
         
@@ -30,6 +35,7 @@
         $statement->bindValue(':rules',$rules);
         $statement->bindValue(':updatedDate',$updatedDate);
         $statement->bindValue(':forumId',$forumId, PDO::PARAM_INT);
+        $statement->bindValue(':categoryId',$categoryId);
 
         if($statement->execute())
         {

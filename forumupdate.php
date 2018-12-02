@@ -18,6 +18,10 @@
     $statement->execute();
 
     $forumRow = $statement->fetch();
+
+    $categoryQuery2 = "SELECT * FROM categories";
+    $categoryStatement2 = $db->prepare($categoryQuery2);
+    $categoryStatement2->execute();
 ?>
 <!DOCTYPE html>
 <html lang = "en">
@@ -51,8 +55,22 @@
                 <label for="rules">Forum Rules</label>
                 <textarea name="rules" id="rules" cols="30" rows="10"><?=$forumRow['Rules']?></textarea>
 
+                <select name="category" id="category">
+                    <option value="">None</option>
+                    <?php if($categoryStatement2->rowCount() !=0):?>
+                        <?php while($categoryRow = $categoryStatement2->fetch()):?>
+                            <option value="<?=$categoryRow['type']?>" 
+                            <?php if($categoryRow['type'] === $forumRow['categoryId']):?>
+                                selected="selected"
+                            <?php endif?>
+                            ><?=$categoryRow['name']?></option>
+                        <?php endwhile?>
+                    <?php endif?>
+                </select>
+
                 <button type="submit" name="update_button" value="update">Update</button>
                 <button type="submit" name="delete_button" value="delete"  onclick="return confirm('Are you sure you wish to delete this post?')">Delete</button>
+                
             </form>
         </div>
 

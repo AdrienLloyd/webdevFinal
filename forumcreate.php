@@ -7,23 +7,6 @@
     $statement = $db->prepare($query);
     $statement->execute();
 ?>
- <!-- <!DOCTYPE html>
- <html>
-     <head><title>File Upload Form</title></head>
- <body>
-     <form method='post' enctype='multipart/form-data'>
-         <label for='image'>Image Filename:</label>
-         <input type='file' name='image' id='image'>
-         <input type='submit' name='submit' value='Upload Image'>
-     </form>
-     
-    //<?php if ($upload_error_detected): ?>
-
-        <p>Error Number: <?= $_FILES['image']['error'] ?></p>
-
-    //<?php endif ?>
- </body>
- </html> -->
  <!DOCTYPE html>
 <html lang = "en">
 <head>
@@ -59,7 +42,9 @@
                 <label for="rules">Forum Rules</label>
                 <textarea name="rules" id="rules" cols="30" rows="10"></textarea>
 
+                <label for="category">Category</label>
                 <select name="category" id="category">
+                    <option value="">None</option>
                     <?php if($statement->rowCount() !=0):?>
                         <?php while($row = $statement->fetch()):?>
                             <option value="<?=$row['type']?>"><?=$row['name']?></option>
