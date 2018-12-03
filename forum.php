@@ -11,9 +11,20 @@
     //change this if statement because a refresh resubmits the post
     if(strtoupper($_SERVER['REQUEST_METHOD']) == 'POST')
     {
+        if(!filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+        {
+            header('Location: index.php?orderBy=None');
+        }
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if(!filter_input(INPUT_POST, 'body', FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+        {
+            header('Location: index.php?orderBy=None');
+        }
         $body = filter_input(INPUT_POST, 'body', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
         $username = $_SESSION['username'];
+
+        
         $insertQuery = "INSERT INTO forumposts (title,body,forumId,username) VALUES (:title,:body,:forumId,:username)";
         $insertStatement = $db-> prepare($insertQuery);
         $insertStatement->bindValue(':title',$title);

@@ -2,6 +2,7 @@
     require('connect.php');
     session_start();
     include('useronly.php');
+
     $imageuploaded = false;
     $imageFileName = "";
     
@@ -49,14 +50,28 @@
         }
     }
     
+    if(!filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+    {
+        header('Location: index.php?orderBy=None');
+    }
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    
+    //no filter on these because WYSIWYG!
     $description = $_POST['description'];
     $rules = $_POST['rules'];
+
+
     if($_POST['category'] ==="")
     {
         $_POST['category'] = null;
     }
-    $categoryId = $_POST['category'];
+
+    if(!filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT))
+    {
+        header('Location: index.php?orderBy=None');
+    }
+    $categoryId = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT);
+    
 
     date_default_timezone_set('America/Winnipeg');
     $date = date('Y-m-d');

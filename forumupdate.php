@@ -10,13 +10,9 @@
     $id = filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_NUMBER_INT);
 
     $query = "SELECT * FROM forums WHERE forumId = :forumId";
-
     $statement = $db->prepare($query);
-
     $statement->bindValue(':forumId',$id,PDO::PARAM_INT);
-
     $statement->execute();
-
     $forumRow = $statement->fetch();
 
     $categoryQuery2 = "SELECT * FROM categories";

@@ -4,7 +4,12 @@
     session_start();
     include('useronly.php');
     
-    $forumId = filter_input(INPUT_GET,'forumId',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    if(!filter_input(INPUT_GET, 'forumId', FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+    {
+        header('Location: index.php?orderBy=None');
+    }
+    $forumId = filter_input(INPUT_GET, 'forumId', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    
     $query = "DELETE FROM forums WHERE forumId = :forumId";
     $statement = $db-> prepare($query);
     $statement->bindValue(':forumId',$forumId,PDO::PARAM_STR);

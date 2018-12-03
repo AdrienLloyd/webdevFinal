@@ -5,8 +5,18 @@
     
     if(strtoupper($_SERVER['REQUEST_METHOD']) == 'POST')
     {
+        if(!filter_input(INPUT_POST,'loginusername',FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+        {
+            header('Location: index.php');
+        }
         $username = filter_input(INPUT_POST, 'loginusername', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(!filter_input(INPUT_POST,'loginpassword',FILTER_SANITIZE_FULL_SPECIAL_CHARS))
+        {
+            header('Location: index.php');
+        }
         $password = filter_input(INPUT_POST, 'loginpassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
         $passwordhash = password_hash($password,PASSWORD_DEFAULT);
 
         $userQuery = "SELECT * FROM users WHERE username = '$username'";

@@ -8,9 +8,9 @@
     {
         $_SESSION['category'] = "None";
     }
-    if(isset($_POST['category']))
+    if(isset($_POST['category']) && filter_input(INPUT_POST,'category',FILTER_SANITIZE_FULL_SPECIAL_CHARS))
     {
-        $_SESSION['category'] = $_POST['category'];
+        $_SESSION['category'] = filter_input(INPUT_POST,'category',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
     if($_SESSION['category'] != "None")
     {
@@ -18,14 +18,14 @@
     }
 
     //for search
-    if (isset($_POST['search_button']) && $_SESSION['category'] != "None") 
+    if (isset($_POST['search_button']) && $_SESSION['category'] != "None" && filter_input(INPUT_POST,'search',FILTER_SANITIZE_FULL_SPECIAL_CHARS)) 
     {
-        $search = $_POST['search'];
+        $search = filter_input(INPUT_POST,'search',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $query .= " AND title LIKE '%".$search."%'";
     }
-    if(isset($_POST['search_button']) && $_SESSION['category'] == "None")
+    if(isset($_POST['search_button']) && $_SESSION['category'] == "None" && filter_input(INPUT_POST,'search',FILTER_SANITIZE_FULL_SPECIAL_CHARS))
     {
-        $search = $_POST['search'];
+        $search = filter_input(INPUT_POST,'search',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $query .= " WHERE title LIKE '%".$search."%'";
     }
 
@@ -34,9 +34,9 @@
     {
         $_SESSION['orderBy'] = "None";
     }
-    if(isset($_GET['orderBy']))
+    if(isset($_GET['orderBy']) && filter_input(INPUT_GET,'orderBy',FILTER_SANITIZE_FULL_SPECIAL_CHARS))
     {
-        $_SESSION['orderBy'] = $_GET['orderBy'];
+        $_SESSION['orderBy'] = filter_input(INPUT_GET,'orderBy',FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
     if($_SESSION['orderBy'] != "None")
     {

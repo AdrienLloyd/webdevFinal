@@ -4,7 +4,7 @@
     session_start();
     include('adminonly.php');
     
-    $type = $_GET['type'];
+    $type = filter_input(INPUT_GET,'type',FILTER_SANITIZE_NUMBER_INT);
 
     $query = "DELETE FROM categories WHERE type = $type";
     $statement = $db->prepare($query);
